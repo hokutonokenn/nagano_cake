@@ -1,0 +1,61 @@
+<div class="row mt-3">
+  <h4 class="mb-3">注文履歴詳細</h4>
+  <table class="table table-borderless mb-3">
+    <tr>
+      <th class="col-2"><strong>購入者</strong></th>
+      <td><%= @order.customer.last_name + @order.customer.first_name %></td>
+    </tr>
+    <tr>
+      <th><strong>注文日</strong></th>
+      <td><%= @order.created_at.strftime("%Y/%m/%d") %></td>
+    </tr>
+    <tr>
+      <th><strong>配送先</strong></th>
+      <td>
+        〒<%= @order.order_postcode%> <%=@order.order_address %><br>
+        <%= @order.order_address_name %>
+      </td>
+    </tr>
+    <tr>
+      <th><strong>支払方法</strong></th>
+      <td><%= @order.payment_i18n %></td>
+    </tr>
+    <tr>
+      <th><strong>注文ステータス</strong></th>
+      <td id="order_status">
+        <%= render "order_status", order: @order %>
+      </td>
+    </tr>
+  </table>
+</div>
+<div class="row mt-3">
+  <table class="table col-8">
+    <thead class="table-active">
+      <tr>
+        <th><strong>商品名</strong></th>
+        <th><strong>単価(税込)</strong></th>
+        <th><strong>数量</strong></th>
+        <th><strong>小計</strong></th>
+        <th><strong>製作ステータス</strong></th>
+      </tr>
+    </thead>
+    <tbody class="manufacture_status">
+      <%= render "order_item_table", order_items: @order_items %>
+    </tbody>
+  </table>
+  <div class="col-1"></div>
+  <table class="table-borderless col-2">
+    <tr>
+      <th><strong>商品合計</strong></th>
+      <td><%= number_with_delimiter(@order.billing_price - @order.postage).to_s + "円" %></td>
+    </tr>
+    <tr>
+      <th><strong>送料</strong></th>
+      <td><%= number_with_delimiter(@order.postage.to_s) + "円" %></td>
+    </tr>
+    <tr>
+      <th><strong>請求金額合計</strong></th>
+      <td><%= number_with_delimiter(@order.billing_price).to_s + "円" %></td>
+    </tr>
+  </table>
+</div>

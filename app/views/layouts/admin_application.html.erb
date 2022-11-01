@@ -5,12 +5,22 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'admin/header' %>
+    <main>
+      <p id="notice"><%= notice %></p>
+      <div class='container'>
+        <div class='row'>
+          <div class='col-12'>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </main>
+    <%= render 'layouts/footer' %>
   </body>
 </html>
