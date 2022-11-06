@@ -1,9 +1,10 @@
 class Admin::ItemsController < ApplicationController
-
+  before_action :authenticate_admin!
+  layout "admin_application"
 
 
   def index
-    @items = Item.page(params[:page])
+    @items = Item.all
   end
 
   def new
