@@ -1,20 +1,29 @@
 class Item < ApplicationRecord
 
-  has_many :order_items
   has_many :cart_items, dependent: :destroy
-  has_one_attached :item_image
+  has_many :order_details, dependent: :destroy
   belongs_to :genre
+  has_one_attached :image
 
-  validates :item_name, presence: true, uniqueness: true
-  validates :item_body, presence: true
-  validates :none_taxed_price, presence: true
+  validates :name, presence: true
+  validates :introduction, presence: true
+  validates :price, presence: true
+  validates :image, presence: true
+
+  def self.search(word)
+    where(["name like?", "%#{word}%"])
+  end
 
   def get_image(width, height)
-    unless item_image.attached?
-      file_path = Rails.root.join("app/assets/images/default-image.jpeg")
-      item_image.attach(io: File.open(file_path), filename: "default-image.jpeg", content_type: "image/jpeg")
+    unless image.attached?
+      file_path = Rails.root.join("app/assets/images/no_image.jpg")
+      image.attach(io: File.open(file_path), filename: "default-image.jpg", content_type: "image/jpeg")
     end
-    item_image.variant(resize_to_fill: [width, height]).processed
+    image.variant(resize_to_limit: [width, height]).processed
+  end
+
+  def price_including_tax
+    (price * 1.1).floor
   end
 
 end

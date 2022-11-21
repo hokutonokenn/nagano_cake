@@ -20,10 +20,10 @@
       <tr>
           <td><%= item.id %></td>
           <td><%= link_to item.name, admin_item_path(item) %></td>
-          <td><%= item.non_taxed_price %></td>
+          <td><%= item.price %></td>
           <td><%= item.genre.name %></td>
           <td>
-              <% if item.is_sales_status == true %>
+              <% if item.is_acive == true %>
               <%= "販売中"%>
               <% else %>
               <%= "販売停止" %>
