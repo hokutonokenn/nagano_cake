@@ -3,14 +3,11 @@ Rails.application.routes.draw do
 
 
   namespace :admin do
-    get 'genres/index'
-    get 'genres/edit'
-  end
-  namespace :admin do
     root "homes#top"
     resources :items, only: [:new, :create, :index, :show, :edit, :update]
     resources :orders, only: [:index, :show, :update]
     resources :genres, only: [:index, :create, :edit, :update]
+    resources :customers, only: [:index,:edit,:update,:show]
   end
 
 # 顧客用
