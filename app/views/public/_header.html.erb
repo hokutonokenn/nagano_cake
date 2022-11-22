@@ -1,0 +1,49 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+        <%= image_tag 'nagano_cake_logo.png', size: '180x110', class: "navbar-brand" %>
+      <% if customer_signed_in? %>
+        <h6 class="text-light">ようこそ、<%= current_customer.last_name %>さん！</h6>
+      <% end %>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <% if customer_signed_in? %>
+            <li class="nav-item btn">
+              <%= link_to "マイページ",  class: 'btn btn-outline-secondary btn-sm mr-3' %>
+            </li>
+            <li class="nav-item btn">
+              <%= link_to "商品一覧",  class: 'btn btn-outline-secondary btn-sm mr-3' %>
+            </li>
+            <li class="nav-item btn">
+              <%= link_to "カート",  class: 'btn btn-outline-secondary btn-sm mr-3' %>
+            </li>
+            <li class="nav-item btn">
+              <%= link_to "ログアウト", destroy_customer_session_path, method: :delete, class: 'btn btn-outline-secondary btn-sm mr-3' %>
+            </li>
+          <% else %>
+            <li class="nav-item btn">
+              <%= link_to "About",  class: 'btn btn-outline-secondary btn-sm mr-3' %>
+            </li>
+            <li class="nav-item btn">
+              <%= link_to "商品一覧",  class: 'btn btn-outline-secondary btn-sm mr-3' %>
+            </li>
+            <li class="nav-item btn">
+              <%= link_to "新規登録",  class: 'btn btn-outline-secondary btn-sm mr-3' %>
+            </li>
+            <li class="nav-item btn">
+              <%= link_to "ログイン", new_customer_session_path, class: 'btn btn-outline-secondary btn-sm mr-3' %>
+            </li>
+          <% end %>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item ml-auto pr-3">
+
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
