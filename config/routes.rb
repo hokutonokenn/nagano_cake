@@ -2,14 +2,13 @@ Rails.application.routes.draw do
 
 
 
-  namespace :public do
-    root "homes#top"
-    get 'about' => "homes#about"
+  scope module: :public do
+    root to:  'homes#top'
+    get 'home/about' => 'homes#about', as: 'about'
   end
-  
-  
+
+
   namespace :admin do
-    root "homes#top"
     resources :items, only: [:new, :create, :index, :show, :edit, :update]
     resources :orders, only: [:index, :show, :update]
     resources :genres, only: [:index, :create, :edit, :update]
