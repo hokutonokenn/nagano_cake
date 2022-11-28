@@ -5,10 +5,14 @@ Rails.application.routes.draw do
   scope module: :public do
     root to:  'homes#top'
     get 'home/about' => 'homes#about', as: 'about'
+    get 'customers/my_page' => "customers#show"
+    get 'customers/information/edit' => "customers#edit"
+    patch 'customers/information' => "customers#update"
   end
 
 
   namespace :admin do
+    root "homes#top"
     resources :items, only: [:new, :create, :index, :show, :edit, :update]
     resources :orders, only: [:index, :show, :update]
     resources :genres, only: [:index, :create, :edit, :update]
