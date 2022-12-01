@@ -1,0 +1,34 @@
+    <div class="row d-flex mt-3">
+    <div class="col-lg-2">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th class="text-center" >ジャンル検索</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render "public/items/genre_search", genres: @genres %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-lg-10">
+      <div class="d-flex">
+        <h2><strong>商品一覧</strong></h2>
+        <h4 class="mt-2">(全<%= @item_all.count %>件)</h4>
+      </div>
+      <div class="d-flex flex-lg-wrap items_width">
+        <% @items.each do |item| %>
+          <div class="pr-3">
+            <%= link_to item_path(item)  do %>
+              <%= image_tag item.get_image(250, 150) %>
+            <% end %>
+            <h6 class="mt-1"><strong><%= item.item_name %></strong></h6>
+            <h6 class="mb-4"><strong>¥<%= number_with_delimiter item.taxed_price %></strong></h6>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+      <%= paginate @items %>
+  </div>
