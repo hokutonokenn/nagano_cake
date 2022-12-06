@@ -1,0 +1,67 @@
+<div class="d-flex my-3">
+  <h4>ショッピングカート</h4>
+  <% unless @cart_items.empty? %>
+    <div class="ml-auto">
+      <%= link_to "カートを空にする", cart_items_destroy_all_path, method: :delete, remote: true, class: "btn btn-danger btn-sm" %>
+    </div>
+  <% end %>
+</div>
+<% unless @cart_items.empty? %>
+  <table class="table table-bordered border-dark">
+    <thead class="table-secondary">
+      <tr>
+        <th>商品名</th>
+        <th>単価(税込)</th>
+        <th>数量</th>
+        <th>小計</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="cart_items">
+      <% @cart_items.each do |cart_item| %>
+        <tr>
+          <td>
+            <%= image_tag cart_item.item.get_image(75, 50) %>
+            <%= cart_item.item.name %>
+          </td>
+          <td class="align-middle"><%= number_with_delimiter cart_item.item.taxed_price %></td>
+          <td class="text-center align-middle">
+            <%= form_with model: cart_item do |f| %>
+              <%= f.select :amount, cart_item.amount_options, {selected: cart_item.amount}, {class: "select"} %>
+              <%= f.submit "変更", class: "btn btn-success btn-sm" %>
+            <% end %>
+          </td>
+          <td id="sub_price_<%= cart_item.id %>" class="align-middle">
+            <%= number_with_delimiter cart_item.item_tprice %>
+          </td>
+          <td class="text-center align-middle">
+            <%= link_to "削除する", cart_item_path(cart_item), method: :delete, class: "btn btn-danger btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="d-flex">
+    <%= link_to "買い物を続ける", root_path, class: "btn btn-primary h-50 btn-md" %>
+    <div class="col-4 ml-auto">
+      <table class="table border-dark table-bordered">
+        <tbody>
+          <tr>
+            <th class="table-secondary">合計金額</th>
+            <td id="price">
+              <%= number_with_delimiter @price %>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-3 mx-auto">
+    <%= link_to "情報入力に進む", new_order_path, class: "btn btn-success btn-lg" %>
+  </div>
+<% else %>
+  <div class="mx-auto field">
+    ショッピングカートは空です。
+    <%= link_to "買い物を続ける", root_path, class: "btn btn-primary btn-md" %>
+  </div>
+<% end %>
